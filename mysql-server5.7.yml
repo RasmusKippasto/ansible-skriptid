@@ -1,0 +1,46 @@
+---
+- hosts: webservers
+  tasks:
+  - name: Allaladdimis kataloog
+    file:
+      path=/root/allalaadimised
+      owner=root
+      group=root
+      mode=0755
+      state=directory
+
+  - name: mysql5.7 repositooriumi pakett
+    get_url:
+      url: http://repo.mysql.com/mysql-apt-config_0.8.7-1_all.deb
+      dest: "/root/allalaadimised"
+      mode: 0440
+
+  - name: mysql5.7 instaleerimine repositooriumi
+    apt: "deb=/root/allalaadimised/mysql-apt-config_0.8.7-1_all.deb"
+
+  - name: mysql5.7 instaleerimine
+    apt: name=mysql-server state=present
+
+  - name: python-mysqldb instaleerimine
+    apt: name=python-mysqldb state=latest
+
+  - name: Root login faili loomine
+    copy:
+      dest: /root/.my.cnf
+      owner: root
+      group: root
+      mode: 0600
+      content: |
+          [client]
+           user = root
+           password = qwerty
+
+  - name: Kasutaja root loomine parooliga qwerty koos koigi privileegidega
+    mysql_user:
+      name: root
+      password: qwerty
+      priv: '*.*:ALL,GRANT'
+      state: present
+
+  - name: mysql restart
+    service: name=mysql state=restarted
