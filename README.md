@@ -15,7 +15,7 @@ git config --global core.editor nano
 
 #### Skriptid
 ##### apache.yml
-*Paigaldab Apache2 pageti*
+*Paigaldab Apache2 paketi*
 
 ##### php7.yml
 *Paigaldab php7.0, apchge php7.0 mooduli ja php7.0 mysql mooduli paketid*
