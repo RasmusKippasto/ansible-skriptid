@@ -15,7 +15,7 @@
         value='qwerty'
         vtype='password'
 
-    - name: debconf for php my admin
+    - name: debconf for pma
       debconf:
         name=phpmyadmin
         question='phpmyadmin/mysql/admin-pass'
